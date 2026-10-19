@@ -14,12 +14,15 @@ body{
     margin: 0;
     font-family: arial, sans-serif;
     background-color: #f4f6f7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 
 
 .header__logo{
-    height: 36px;
+    height: 48px;
 }
 
 .card {
@@ -144,6 +147,7 @@ body{
   letter-spacing: 1px;
   color: white;
   text-align: center;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .header__tag::after {
@@ -179,4 +183,50 @@ body{
 .search__input:focus {
   outline: none;
   border-color: var(--verde);
+}
+
+.footer {
+  margin-top: 8px;
+  padding: 24px 16px;
+  background: linear-gradient(90deg, var(--azul-profundo), var(--azul-oscuro) 40%, var(--verde-oscuro));
+  color: white;
+  text-align: center;
+}
+
+.footer__slogan {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--amarillo-claro);
+}
+
+.footer__whatsapp {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: var(--verde-claro);
+  color: var(--azul-profundo);
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 999px;
+}
+
+.footer__whatsapp:hover {
+  background-color: var(--amarillo);
+}
+
+.search,
+.grid {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .header__logo {
+    height: 72px;
+  }
+}
+
+main {
+  flex: 1;
 }
