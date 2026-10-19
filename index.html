@@ -116,6 +116,22 @@
             <button class="cart-bar__btn">Ver pedido</button>
      </div>
 
+       <div class="modal">
+    <div class="modal__box">
+      <h2 class="modal__title">Mi pedido</h2>
+
+      <input type="text" class="modal__input" id="cliente-nombre" placeholder="Tu nombre *">
+      <input type="text" class="modal__input" id="cliente-ciudad" placeholder="Tu ciudad *">
+
+      <div id="pedido-lista"></div>
+
+      <p class="modal__total">Total del pedido: $<span id="pedido-total">0</span></p>
+
+      <button class="modal__send">Enviar pedido por WhatsApp</button>
+      <button class="modal__close">Seguir viendo el catálogo</button>
+    </div>
+  </div>
+
     <script src="js/app.js"></script>
 </body>
   
