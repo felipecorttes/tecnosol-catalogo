@@ -1,10 +1,10 @@
-require("dotenv").config(); 
+require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose"); 
+const mongoose = require("mongoose");
+const Producto = require("./models/Producto"); 
 
 const app = express();
 const PORT = 3000;
-
 
 mongoose
   .connect(process.env.MONGODB_URI, { dbName: "tecnosol" })
@@ -13,10 +13,17 @@ mongoose
     console.error("Error al conectar a MongoDB:", error.message)
   );
 
-app.get("/api/productos", (req, res) => {
-  res.json([
-    { id: 1, nombre: "JT 500w Reflector Solar", precio: 98000 }
-  ]);
+
+app.get("/api/productos", async (req, res) => {
+  try {
+    const productos = await Producto.find({ visible: true })
+      .sort({ nombre: 1 })
+      .lean();
+    res.json(productos);
+  } catch (error) {
+    console.error("Error al listar productos:", error.message);
+    res.status(500).json({ error: "No se pudieron cargar los productos" });
+  }
 });
 
 app.listen(PORT, () => {
