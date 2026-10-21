@@ -11,6 +11,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/productos", require("./routes/productos"));
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/imagenes", require("./routes/imagenes"));
+app.get("/admin", (req, res) => res.redirect("/admin/login.html"));
 
 app.use((err, req, res, next) => {
   console.error(err);
