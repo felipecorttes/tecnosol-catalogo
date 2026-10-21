@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/productos", require("./routes/productos"));
+app.use("/api/auth", require("./routes/auth"));
 
 app.use((err, req, res, next) => {
   console.error(err);
