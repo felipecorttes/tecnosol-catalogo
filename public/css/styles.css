@@ -405,3 +405,23 @@ main {
   text-align: center;
   color: var(--gris);
 }
+
+body {
+  padding-bottom: 70px;
+}
+
+.card__badge--agotado {
+  background-color: var(--gris);
+}
+
+.card__add:disabled {
+  background-color: #c5cbd0;
+  cursor: not-allowed;
+}
+
+.vacio {
+  grid-column: 1 / -1;
+  padding: 24px 0;
+  text-align: center;
+  color: var(--gris);
+}

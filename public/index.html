@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecno Sol-Catalogo</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="header__title">
+            <img src="img/logo.png" alt="Tecno Sol" class="header__logo">
+        </h1>
+            <p class="header__tagline">Paneles Solares y Componentes</p>
+            <p class="header__tag">Catálogo<br>de productos</p>
+    </header>
+    <main>
+        <div class="search">
+            <input type="search" class="search__input" placeholder="Buscar producto, SKU o categoria">
+        </div>
+        <section class="grid" id="grid"></section>
+    </main>
+      <footer class="footer">
+            <p class="footer__slogan">Tu energía, nuestra prioridad</p>
+            <a class="footer__whatsapp" href="https://wa.me/573219463103" target="_blank" rel="noopener">Escríbenos a nuestro WhatsApp</a>
+     </footer>
+
+     <div class="cart-bar">
+            <p class="cart-bar__info">
+            <span id="cart-count">0</span> producto(s) · Total: $<span id="cart-total">0</span>
+            </p>
+            <button class="cart-bar__btn">Ver pedido</button>
+     </div>
+
+       <div class="modal">
+    <div class="modal__box">
+      <h2 class="modal__title">Mi pedido</h2>
+
+      <input type="text" class="modal__input" id="cliente-nombre" placeholder="Tu nombre *">
+      <input type="text" class="modal__input" id="cliente-ciudad" placeholder="Tu ciudad *">
+
+      <div id="pedido-lista"></div>
+
+      <p class="modal__total">Total del pedido: $<span id="pedido-total">0</span></p>
+
+      <button class="modal__send">Enviar pedido por WhatsApp</button>
+      <button class="modal__close">Seguir viendo el catálogo</button>
+    </div>
+  </div>
+
+    <script src="js/app.js"></script>
+</body>
+  
+</html>
