@@ -163,3 +163,8 @@
   margin: 8px 0;
   border-radius: 12px;
 }
+
+.admin__textarea {
+  resize: vertical;
+  font-family: inherit;
+}

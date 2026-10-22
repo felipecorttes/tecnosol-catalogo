@@ -96,6 +96,7 @@ function abrirForm(p = null) {
   campo("f-nombre").value = p ? p.nombre : "";
   campo("f-sku").value = p?.sku || "";
   campo("f-categoria").value = p?.categoria || "";
+    campo("f-descripcion").value = p?.descripcion || "";
   campo("f-precio").value = p ? p.precio : "";
   campo("f-stock").value = p ? p.stock : 0;
   campo("f-activo").checked = p ? p.activo : true;
@@ -112,13 +113,40 @@ campo("btn-salir").addEventListener("click", () => {
   window.location.href = "/admin/login.html";
 });
 
+function reducirImagen(archivo, lado = 1600) {
+  return new Promise((resolver) => {
+    const url = URL.createObjectURL(archivo);
+    const img = new Image();
+    img.onload = () => {
+      const escala = Math.min(1, lado / Math.max(img.width, img.height));
+      const lienzo = document.createElement("canvas");
+      lienzo.width = Math.round(img.width * escala);
+      lienzo.height = Math.round(img.height * escala);
+      const ctx = lienzo.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, lienzo.width, lienzo.height);
+      ctx.drawImage(img, 0, 0, lienzo.width, lienzo.height);
+      URL.revokeObjectURL(url);
+      lienzo.toBlob((blob) => resolver(blob || archivo), "image/jpeg", 0.85);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolver(archivo);
+    };
+    img.src = url;
+  });
+}
+
 campo("f-imagen").addEventListener("change", async (e) => {
   const archivo = e.target.files[0];
   if (!archivo) return;
   const aviso = campo("f-error");
-  aviso.textContent = "Subiendo foto...";
+  aviso.textContent = "Preparando y subiendo la foto...";
+
+  const listo = await reducirImagen(archivo);
   const datos = new FormData();
-  datos.append("imagen", archivo);
+  datos.append("imagen", listo, "foto.jpg");
+
   const res = await api("/api/imagenes", { method: "POST", body: datos });
   const resp = await res.json();
   if (!res.ok) {
@@ -136,6 +164,7 @@ form.addEventListener("submit", async (e) => {
     nombre: campo("f-nombre").value.trim(),
     sku: campo("f-sku").value.trim(),
     categoria: campo("f-categoria").value.trim(),
+     descripcion: campo("f-descripcion").value.trim(),
     precio: Number(campo("f-precio").value),
     stock: Number(campo("f-stock").value),
     activo: campo("f-activo").checked,

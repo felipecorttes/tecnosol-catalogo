@@ -12,6 +12,14 @@ const listaEl = document.getElementById("pedido-lista");
 const pedidoTotalEl = document.getElementById("pedido-total");
 const inputNombre = document.getElementById("cliente-nombre");
 const inputCiudad = document.getElementById("cliente-ciudad");
+const detalle = document.getElementById("detalle");
+const detalleImg = document.getElementById("detalle-img");
+const detalleNombre = document.getElementById("detalle-nombre");
+const detallePrecio = document.getElementById("detalle-precio");
+const detalleDesc = document.getElementById("detalle-desc");
+const detalleAgregar = document.getElementById("detalle-agregar");
+const detalleCerrar = document.getElementById("detalle-cerrar");
+let productoDetalle = null;
 
 const esc = (t) =>
   String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -41,8 +49,10 @@ function dibujar(lista) {
       return `
       <article class="card" data-id="${p._id}">
         <span class="card__badge ${hayStock ? "" : "card__badge--agotado"}">${hayStock ? "✓ Disponible" : "Agotado"}</span>
-        <img src="${esc(p.imagenes[0] || "/img/logo.png")}" alt="${esc(p.nombre)}" class="card__img" loading="lazy">
-        <h2 class="card__title">${esc(p.nombre)}</h2>
+        <button class="card__foto" data-accion="detalle" aria-label="Ver ${esc(p.nombre)}">
+          <img src="${esc(p.imagenes[0] || "/img/logo.png")}" alt="${esc(p.nombre)}" class="card__img" loading="lazy">
+        </button>
+        <h2 class="card__title" data-accion="detalle">${esc(p.nombre)}</h2>
         <p class="card__price">$${pesos(p.precio)}</p>
         <div class="card__actions">
           <button class="qty__btn" data-accion="menos">−</button>
@@ -56,18 +66,18 @@ function dibujar(lista) {
 }
 
 grid.addEventListener("click", (e) => {
-  const boton = e.target.closest("button[data-accion]");
-  if (!boton) return;
-  const tarjeta = boton.closest(".card");
+  const elemento = e.target.closest("[data-accion]");
+  if (!elemento) return;
+  const tarjeta = elemento.closest(".card");
+  const producto = productos.find((p) => p._id === tarjeta.dataset.id);
   const cantidadEl = tarjeta.querySelector(".qty__value");
   const actual = Number(cantidadEl.textContent);
+  const accion = elemento.dataset.accion;
 
-  if (boton.dataset.accion === "mas") cantidadEl.textContent = actual + 1;
-  if (boton.dataset.accion === "menos" && actual > 1) cantidadEl.textContent = actual - 1;
-  if (boton.dataset.accion === "agregar") {
-    const producto = productos.find((p) => p._id === tarjeta.dataset.id);
-    agregarAlCarrito(producto, actual);
-  }
+  if (accion === "detalle") abrirDetalle(producto);
+  if (accion === "mas") cantidadEl.textContent = actual + 1;
+  if (accion === "menos" && actual > 1) cantidadEl.textContent = actual - 1;
+  if (accion === "agregar") agregarAlCarrito(producto, actual);
 });
 
 function agregarAlCarrito(producto, cantidad) {
@@ -164,6 +174,35 @@ async function cargarProductos() {
     grid.innerHTML = '<p class="vacio">No pudimos cargar los productos. Intenta de nuevo.</p>';
   }
 }
+
+function abrirDetalle(producto) {
+  productoDetalle = producto;
+  const hayStock = producto.stock > 0;
+  detalleImg.src = producto.imagenes[0] || "/img/logo.png";
+  detalleImg.alt = producto.nombre;
+  detalleNombre.textContent = producto.nombre;
+  detallePrecio.textContent = `$${pesos(producto.precio)}`;
+  detalleDesc.textContent = producto.descripcion || "Este producto aún no tiene descripción.";
+  detalleAgregar.disabled = !hayStock;
+  detalleAgregar.textContent = hayStock ? "Agregar al pedido" : "Agotado";
+  detalle.classList.add("detalle--open");
+}
+
+function cerrarDetalle() {
+  detalle.classList.remove("detalle--open");
+}
+
+detalleCerrar.addEventListener("click", cerrarDetalle);
+detalle.addEventListener("click", (e) => {
+  if (e.target === detalle) cerrarDetalle();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") cerrarDetalle();
+});
+detalleAgregar.addEventListener("click", () => {
+  agregarAlCarrito(productoDetalle, 1);
+  cerrarDetalle();
+});
 
 actualizarBarra();
 cargarProductos();

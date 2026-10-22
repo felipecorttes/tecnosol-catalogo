@@ -4,7 +4,7 @@ const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-const CAMPOS = ["nombre", "sku", "precio", "categoria", "imagenes", "stock", "activo"];
+const CAMPOS = ["nombre", "sku", "precio", "categoria", "descripcion", "imagenes", "stock", "activo"];
 
 function limpiar(body) {
   const datos = {};
