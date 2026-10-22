@@ -425,3 +425,116 @@ body {
   text-align: center;
   color: var(--gris);
 }
+
+.card__foto {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.card__foto:hover .card__img {
+  opacity: 0.92;
+}
+
+.card__title[data-accion="detalle"] {
+  cursor: pointer;
+}
+
+.detalle {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  background-color: rgba(8, 35, 55, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.detalle--open {
+  display: flex;
+}
+
+.detalle__box {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 100%;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(8, 35, 55, 0.35);
+  animation: aparecer 0.3s ease;
+}
+
+.detalle__cerrar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  color: var(--azul-oscuro);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.detalle__img {
+  display: block;
+  width: 100%;
+  height: 40vh;
+  max-height: 360px;
+  object-fit: contain;
+  background-color: #f4f6f7;
+  border-radius: 24px 24px 0 0;
+}
+
+.detalle__info {
+  padding: 18px 20px 20px;
+}
+
+.detalle__nombre {
+  margin: 0 0 6px;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: var(--azul-oscuro);
+}
+
+.detalle__precio {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--verde);
+}
+
+.detalle__desc {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #3b4a56;
+  white-space: pre-line;
+}
+
+.detalle__agregar {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, var(--verde), var(--verde-claro));
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.detalle__agregar:disabled {
+  background: #c5cbd0;
+  cursor: not-allowed;
+}
