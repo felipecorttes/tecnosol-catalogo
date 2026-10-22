@@ -1,4 +1,4 @@
-const NUMERO_WHATSAPP = "573219463103";
+const NUMERO_WHATSAPP = "573132647682";
 
 const grid = document.getElementById("grid");
 const buscador = document.querySelector(".search__input");
